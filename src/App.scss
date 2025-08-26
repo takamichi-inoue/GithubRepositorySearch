@@ -1,0 +1,239 @@
+@use 'sass:string';
+@function str-replace($string, $search, $replace: '') {
+  $index: string.index($string, $search);
+
+  @if $index {
+    @return string.slice($string, 1, $index - 1) + $replace +
+      str-replace(
+        string.slice($string, $index + string.length($search)),
+        $search,
+        $replace
+      );
+  }
+
+  @return $string;
+}
+$lightGray: #e2e2e2;
+$radius: 4px;
+
+.contents-root {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.search-area {
+  border-bottom: solid 1px $lightGray;
+}
+
+.avatar {
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: $radius;
+}
+
+.list-item {
+  border-radius: $radius;
+  box-shadow: 0px 0px 4px 1px $lightGray;
+}
+.list-item:hover {
+  box-shadow: 0px 0px 4px 4px $lightGray;
+}
+
+.overflow-hidden {
+  overflow-y: hidden;
+}
+
+.scroll-y {
+  overflow-y: scroll;
+}
+
+.field-wrapper > p::after {
+  content: ' :';
+}
+
+// input
+.input-group-root,
+.select-root {
+  padding: 0.5rem;
+  border-radius: $radius;
+  border: solid 1px $lightGray;
+  width: fit-content;
+}
+
+.input-group-root {
+  padding: 0.2rem;
+}
+
+.input-group-root input {
+  outline: none;
+  border: none;
+  padding: 0.3rem;
+  border-radius: $radius;
+}
+
+.input-group-root:focus-within {
+  outline: solid 2px #000000;
+}
+
+// button
+.icon-button,
+button {
+  padding: 0.5rem 1rem;
+  background-color: #f6f6f6;
+  border: solid 1px $lightGray;
+  border-radius: $radius;
+  color: #000000;
+  cursor: pointer;
+}
+.icon-button {
+  padding: 0.3rem;
+  background-color: transparent;
+  border: none;
+}
+
+// pagination
+.paging-p {
+  display: inline-block;
+  padding: 0.5rem;
+  min-width: 1rem;
+  text-align: center;
+  border-radius: $radius;
+  cursor: pointer;
+  overflow-wrap: unset;
+}
+
+// hover active
+.icon-button:hover,
+button:hover,
+.paging-p:hover {
+  background: #cecece;
+}
+
+.icon-button:active,
+.paging-p:active,
+button:active {
+  opacity: 0.6;
+}
+
+.active {
+  background: #535bf2;
+  color: #ffffff;
+}
+
+// spinner
+.spinner {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+  width: fit-content;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 
+* =================================
+* utility
+* =================================
+*/
+$spacings: '0.5', '1', '1.5', '2', '4', '6', '8', '12', '14', '16', '24';
+
+// width
+.w-full {
+  width: 100%;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.font-size {
+  &-xs {
+    font-size: 0.7rem;
+  }
+  &-sm {
+    font-size: 0.875rem;
+  }
+  &-md {
+    font-size: 1rem;
+  }
+  &-lg {
+    font-size: 1.125rem;
+  }
+  &-xl {
+    font-size: 1.3rem;
+  }
+}
+
+@each $val in $spacings {
+  // padding
+  $cn: str-replace($val, '.', '\\.');
+  .p-#{$cn} {
+    padding: #{$val}rem;
+  }
+  .px-#{$cn} {
+    padding-inline: #{$val}rem;
+  }
+  .py-#{$cn} {
+    padding-inline: #{$val}rem;
+  }
+  .m-#{$cn} {
+    margin: #{$val}rem;
+  }
+  // gap
+  .gap-#{$cn} {
+    gap: #{$val}rem;
+  }
+}
+
+// flex
+.flex-row {
+  display: flex;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-end {
+  justify-content: end;
+}
+
+// align
+.text-center {
+  text-align: center;
+}
+
+.text-end {
+  text-align: end;
+}
+
+// position
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
